@@ -1,0 +1,25 @@
+version: "3"
+services:
+  web:
+    build: .
+    image: bempromotora/${PROJECT_NAME}:${TAG}
+    env_file:
+      - .env
+    container_name: "${PROJECT_NAME}"
+    ports:
+      - ${PORTEXT}:80
+    depends_on:
+      - "rabbitmq"
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    hostname: "rabbitmq"
+    labels:
+      NAME: "rabbitmq"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+     - RABBITMQ_DEFAULT_USER=admin
+     - RABBITMQ_DEFAULT_PASS=admin
